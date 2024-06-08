@@ -6,8 +6,8 @@ Topics kafki w naszej aplikacji
 ### odwołanie do: https://sebkaz-teaching.github.io/RTA_2024/lab/cw2.html
 
 #### na początku
-1. Na początku pracy najpierw utworzyć dwa topici: project_straming i output_streaming\
-*  w tym celu uruchomić terminal i zmienić ścieżkę na:
+1. Na początku pracy najpierw utworzyć dwa topici: project_straming i output_streaming
+*  w tym celu uruchomić terminal i zmienić ścieżkę na:\
     cd ~
 * dodać topici:\
    kafka/bin/kafka-topics.sh --bootstrap-server broker:9092 --create --topic project_streaming\
