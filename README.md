@@ -20,9 +20,9 @@ Topics kafki w naszej aplikacji
   kafka/bin/kafka-console-consumer.sh --bootstrap-server broker:9092 --topic project_streaming --from-beginning\
    powinny generować się dane\
 4.  I w nastęnej konsoli można też w ten sposób działanie reguły decyzyjnej - danych przetworzonych:\
-* w jednej konsoli mpożna uruchomić sobie:\
+* w jednej konsoli można uruchomić sobie:\
 python consumer.py żeby zobaczyć wydruk\
-* w drugiej konsoli można wyrzucić sobie kafkę:
+* w drugiej konsoli można wyrzucić sobie kafkę:\
 kafka/bin/kafka-console-consumer.sh --bootstrap-server broker:9092 --topic output_streaming --from-beginning
 
 
