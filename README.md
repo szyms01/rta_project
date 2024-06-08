@@ -13,4 +13,5 @@ Topics kafki w naszej aplikacji
 4. i uruchamiać plik linijką:
 flask run --host 0.0.0.0
 
-#requirements.txt - dodatkowe paczki do zainstalowania poza wgranymi środowiskowymi z kontenera
+# requirements.txt
+*  dodatkowe paczki do zainstalowania poza wgranymi środowiskowymi z kontenera
