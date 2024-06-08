@@ -20,7 +20,6 @@ FIRST_CG = 'project_streaming'
 SECOND_TOPIC = 'output_streaming'
 SECOND_CG = 'output_streaming'
 LAG = 5
-# NUM_PARTITIONS = 3
 
  
 
@@ -75,8 +74,6 @@ producer = create_producer()
 generated_point = generate_random_point()
 # stały wygenerowany punkt względem którego liczymy odległość
 print("Punkt wygenerowany: ", generated_point)
-# print("Punkt wygenerowany: ", generated_point.x)
-# print("Punkt wygenerowany: ", generated_point.y)
 
 # tworze transformację, która zmienia współrzędne punktu na współrzędne geograficzne 
 transformer = Transformer.from_crs("epsg:4326", "epsg:3857", always_xy=True)
@@ -98,7 +95,9 @@ try:
         # serializacja wiadomości żeby wczytać do kafki, wewnatrz do modyfikacji
         data = message.value().decode("utf-8") # string
         data_json = json.loads(data) # zamiana stringa na json
-        # zamiana - reguła decyzyjna w postaci 5 najbliższych stacji i ich stanu  
+        
+        # zamiana - reguła decyzyjna w postaci 5 najbliższych stacji i ich stanu 
+        
         df_data = pd.DataFrame(data_json)
         df_data.set_index('station_name', inplace=True)
         # współrzędne punktu każdej stacji
@@ -114,12 +113,6 @@ try:
         df_smallest['distance_meters'] = df_smallest['distance_meters'].round(2)
         df_smallest_cleaned = df_smallest.drop(columns=['point', 'latitude', 'longitude'])
 
-        # serialisation of the final result 
-        # wstawić kolumnę, która liczy odległość punktu od stacji
-
-        # json dumps na koniec 
-        # data_json = json.dumps(df_data)
-        # print(data_json[0])
         df_sm_cleaned_json = df_smallest_cleaned.reset_index().to_json(orient='records')
         # producent produkujący nowe dane 
         if producer is not None:
@@ -137,8 +130,4 @@ try:
 except KeyboardInterrupt:
     consumer.close()
         
-
-# for _ in range(NUM_PARTITIONS):
-#     p = Process()
-#     p.start()
 
