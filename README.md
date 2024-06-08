@@ -4,7 +4,7 @@ Topics kafki w naszej aplikacji
 * topic poboczny do któego trafiają wyniki: output_streaming
 
 
-# Uruchomienie flaska wewnątrz środowiska analizy danych w czasie rzeczywistym:
+### Uruchomienie flaska wewnątrz środowiska analizy danych w czasie rzeczywistym:
 
 1. dodać linijkę 
 - 5000:5000 w pliku docker-compose.yml i zapisać
