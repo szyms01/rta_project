@@ -3,14 +3,14 @@ Topics kafki w naszej aplikacji
 * topic poboczny do którego trafiają wyniki: output_streaming
 
 # Uruchamianie działania projektu
-odwołanie do: https://sebkaz-teaching.github.io/RTA_2024/lab/cw2.html
+### odwołanie do: https://sebkaz-teaching.github.io/RTA_2024/lab/cw2.html
 
-1. najpierw należy utworzyć dwa topici: project_straming i output_streaming
-     a. w tym celu uruchomić terminal i zmienić ścieżkę na:
-    cd ~
-     b. dodać topic:
-   kafka/bin/kafka-topics.sh --bootstrap-server broker:9092 --create --topic project_streaming
-   kafka/bin/kafka-topics.sh --bootstrap-server broker:9092 --create --topic output_streaming
+1. najpierw utworzyć dwa topici: project_straming i output_streaming\
+     a. w tym celu uruchomić terminal i zmienić ścieżkę na:\
+    cd ~\
+     b. dodać topic:\
+   kafka/bin/kafka-topics.sh --bootstrap-server broker:9092 --create --topic project_streaming\
+   kafka/bin/kafka-topics.sh --bootstrap-server broker:9092 --create --topic output_streaming\
    
 
 
