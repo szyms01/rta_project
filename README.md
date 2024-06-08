@@ -1,7 +1,7 @@
 Topics kafki w naszej aplikacji
 
 * topic główny producenta: project_straming
-* topic decyzji biznesowej filtrowania 5-ciu najbliższych stacji: decision_straming
+* topic poboczny do któego trafiają wyniki: output_streaming
 
 
 # Uruchomienie flaska wewnątrz środowiska analizy danych w czasie rzeczywistym:
