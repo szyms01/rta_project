@@ -41,8 +41,7 @@ kafka/bin/kafka-console-consumer.sh --bootstrap-server broker:9092 --topic outpu
 1. dodać linijkę 
 - 5000:5000 w pliku docker-compose.yml i zapisać
 2. zrobić w terminalu swojego komputera docker compose up w ścieżce katalogu jupiter-lab
-3.  w apce wpisać hosta 
-4. i uruchamiać aplikację flaska linijką:
+3. i uruchamiać aplikację flaska linijką:
 flask run --host 0.0.0.0
 
 # requirements.txt
