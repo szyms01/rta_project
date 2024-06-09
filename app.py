@@ -2,7 +2,62 @@ from flask import Flask, jsonify, render_template
 import pandas as pd
 import random
 from shapely.geometry import Point, Polygon
-# from consumer import generate_random_point
+from confluent_kafka import Consumer, KafkaException, KafkaError
+import socket
+import logging
+import json
+
+
+
+# napisac konsumenta wewnątrz aplikacji flask - kopiowanie z consumer.py
+KAFKA_BROKER = 'broker:9092'
+SECOND_TOPIC = 'output_streaming'
+SECOND_CG = 'output_streaming'
+LAG = 10
+
+
+def create_consumer(topic, group_id):
+    try:
+ 
+        consumer = Consumer({
+          "bootstrap.servers": KAFKA_BROKER,
+          "group.id": group_id,
+          "client.id": socket.gethostname(),
+          "isolation.level":"read_committed",
+          "default.topic.config":{
+                    "auto.offset.reset":"latest",
+                    "enable.auto.commit": False
+            }
+        })
+        consumer.subscribe([topic])
+    except Exception as e:
+        logging.exception("nie mogę utworzyć konsumenta")
+        consumer = None
+    return consumer
+
+# funkcja nasłuchująca topic
+def consumer_message():    
+    consumer = create_consumer(topic = SECOND_TOPIC, group_id = SECOND_CG)
+    last_message = None
+    try:
+        # nasłuchuj konsumenta jednorazowo 
+        message = consumer.poll()
+        if message and not message.error():
+            data = message.value().decode("utf-8") # string
+            data_json = json.loads(data) # zamiana stringa na json
+            df_data = pd.DataFrame(data_json)
+            # df_data = df_data.reset_index()
+            last_message = df_data.copy()
+        elif message and message.error():
+            if message.error().code() != KafkaError._PARTITION_EOF:
+                raise KafkaException(msg.error())
+    except Exception as e:
+        print(f"Error: {e}")       
+    finally:
+        consumer.close()
+    return last_message
+    
+
 
 app = Flask(__name__)
 
@@ -35,7 +90,7 @@ def generate_random_point():
 
 
 
-
+# napisać funkcję która zwraca wynik kafki 
 
 
 # strona będzie wysyłać dane do serwera i pobierać dane z serwera
@@ -43,19 +98,17 @@ def generate_random_point():
 def index():
     # na stronie głównej też zwracam jakoś wynik losowania z producenta
     random_point = generate_random_point() 
+    # tu  df
+    message_df = consumer_message()
+    message_df = message_df.rename(columns={'station_name': 'Stacja', 'number_of_slots': 'Wszystkich', 'number_of_free_bikes': 'Wolnych rowerów', 'number_of_e_bikes': 'Wolnych rowerów elektrycznych', 'number_of_empty_slots': 'Miejsc', 'update_time': 'Godzina', 'distance_meters': 'Dystans [m]'})
+    dataframe_html_message = message_df.to_html(classes='table table-bordered table-centered', index=False)
     # coordinates = {"latitude": random_point.y, "longitude": random_point.x }
+    return render_template('index.html', latitude=random_point.y, longitude=random_point.x, 
+                           message = dataframe_html_message)
 
-    # Example dataframe
-    data = {
-        'Column1': ['A', 'B', 'C', 'D'],
-        'Column2': [1, 2, 3, 4],
-        'Column3': [10.1, 20.2, 30.3, 40.4]
-    }
-    df = pd.DataFrame(data)
 
-    dataframe_html = df.to_html(classes='table table-striped table-bordered', index=False)
-
-    return render_template('index.html', latitude=random_point.y, longitude= random_point.x, dataframe=dataframe_html)
+        
+            
 
 if __name__ == '__main__':
     app.run(host = '0.0.0.0',port=5000, debug = True)

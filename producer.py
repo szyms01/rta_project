@@ -11,7 +11,7 @@ from confluent_kafka import Producer
  
 KAFKA_BROKER = 'broker:9092'
 TRANSACTION_TOPIC = 'project_streaming'
-LAG = 5
+LAG = 10
 
 # tworzy producenta
 def create_producer():

@@ -5,7 +5,7 @@ import numpy as np
 import socket
 import logging
 from datetime import datetime
-from joblib import load
+# from joblib import load
 import pandas as pd
 from confluent_kafka import Producer, Consumer
 from multiprocessing import Process
@@ -19,7 +19,7 @@ FIRST_TOPIC = 'project_streaming'
 FIRST_CG = 'project_streaming'
 SECOND_TOPIC = 'output_streaming'
 SECOND_CG = 'output_streaming'
-LAG = 5
+LAG = 10
 
  
 
@@ -112,7 +112,7 @@ try:
         df_smallest = df_data.nsmallest(5, 'distance_meters')
         df_smallest['distance_meters'] = df_smallest['distance_meters'].round(2)
         df_smallest_cleaned = df_smallest.drop(columns=['point', 'latitude', 'longitude'])
-
+        
         df_sm_cleaned_json = df_smallest_cleaned.reset_index().to_json(orient='records')
         # producent produkujący nowe dane 
         if producer is not None:

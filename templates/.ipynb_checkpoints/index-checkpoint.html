@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
     <title>Geographic Coordinates and Dataframe</title>
@@ -20,7 +20,7 @@
         
       <div class="dataframe-container text-center mt-5">
           <p>Najbliższych 5 stacji rowerowych w pobliżu: </p>
-        {{ dataframe | safe }}
+                {{ message | safe}}
       </div>
     </div>
     <!-- Bootstrap Bundle with Popper -->
